@@ -1,6 +1,6 @@
 # Distribuição e agendamento de tarefas de cotação de criptomoedas com Python, Django/DRF, Celery e RabbitMQ.
 
-O projeto usa a API do site DefiLlama para pegar as cotações de criptomoedas, através do nome da cripo(chain) e do endereço de contrato(address), que podem ser obtidos no site da Coingecko e da EtherScan, e salva essas cotações no banco de dados.
+O projeto usa a API do site DefiLlama para pegar as cotações de criptomoedas, através do nome da cripto(chain) e do endereço de contrato(address), que podem ser obtidos no site da Coingecko e da EtherScan, e salva essas cotações no banco de dados.
 
 Para distribuição e agendamento das tarefas é usado o Celery e o Celery Beat, integrados com o Django, e o RabbitMQ como broker de mensagens. 
 
