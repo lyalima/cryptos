@@ -6,13 +6,32 @@ Para distribuição e agendamento das tarefas é usado o Celery e o Celery Beat,
 
 O agendamento pode ser feito através do Django Admin, e caso não seja usado, as tarefas podem ser executadas através do Django Shell ou usando a API feita em DRF.
 
-Para instalar as dependências necessárias para usar o projeto, execute: pip install -r./requirements.txt.
+Para instalar as dependências necessárias para usar o projeto, execute: 
 
-Para executar o projeto use: python manage.py runserver.
+```bash
+pip install -r./requirements.txt
+```
 
-Para executar o RabbitMQ use: docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management.
+Para executar o projeto use: 
 
-Para executar o Celery sem agendamento de tarefas use: celery -A core worker -l INFO.
+```bash
+python manage.py runserver
+```
 
-Para executar o Celery com agendamento de tarefas(Celery Beat) use: celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler.
+Para executar o RabbitMQ use: 
 
+```bash
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+```
+
+Para executar o Celery sem agendamento de tarefas use: 
+
+```bash
+celery -A core worker -l INFO.
+```
+
+Para executar o Celery com agendamento de tarefas(Celery Beat) use: 
+
+```bash
+celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler.
+```

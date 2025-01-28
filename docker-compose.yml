@@ -1,0 +1,52 @@
+services:
+  db:
+    container_name: db-cryptos-container
+    image: postgres:13
+    volumes:
+      - ./data/db:/var/lib/postgresql/data:delegated
+    environment:
+    - POSTGRES_DB=cryptos
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+
+  rabbitmq:
+    container_name: rabbitmq-cryptos-container
+    image: rabbitmq:3-management
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+  
+  cryptos:
+    container_name: cryptos-container
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    volumes:
+    - .:/app
+    ports:
+    - "8000:8000"
+    depends_on:
+    - db
+    - rabbitmq
+  
+  celery:
+    container_name: celery-cryptos-container
+    build: .
+    command: celery -A core worker -l info
+    restart: always
+    volumes:
+    - .:/app
+    depends_on:
+    - db
+    - rabbitmq
+  
+  celery-beat:
+    container_name: celerybeat-cryptos-container
+    build: .
+    command: celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    restart: always
+    volumes:
+    - .:/app
+    depends_on:
+    - db
+    - rabbitmq
