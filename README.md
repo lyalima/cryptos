@@ -35,3 +35,30 @@ Para executar o Celery com agendamento de tarefas(Celery Beat) use:
 ```bash
 celery -A core beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler.
 ```
+
+## Uso com Docker
+
+### Requisitos 
+
+- Docker 
+- Docker Compose
+
+### Construir e iniciar os containers
+
+```bash
+docker-compose up --build
+```
+
+A aplicação estará disponível em http://127.0.0.1:8000/.
+
+### Executando comandos no container
+
+```bash
+docker-compose exec cryptos-container <comando>
+```
+
+#### Exemplo de comando: aplicar as migrações no container
+
+```bash
+docker-compose exec cryptos-container python manage.py migrate
+```
